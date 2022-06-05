@@ -1,0 +1,23 @@
+.contactsList {
+  padding: 0;
+  margin-left: 100px;
+}
+
+.contactsElement {
+  display: flex;
+  height: 25px;
+  margin-top: 20px;
+}
+
+.btn {
+  font-size: 15px;
+  text-align: center;
+  width: 90px;
+  height: 30px;
+  margin-left: 20px;
+}
+
+.contactsData {
+  font-size: 20px;
+  margin: 0;
+}

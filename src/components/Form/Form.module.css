@@ -1,0 +1,43 @@
+.form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 600px;
+  margin-top: 50px;
+  margin-left: 100px;
+  border: 1px solid black;
+  border-radius: 4px ;
+}
+
+.blockForm {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 15px 0px 15px 0px;
+
+}
+
+.label {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+.input {
+  font-size: 20px;
+  width: 500px;
+  height: 30px;
+  
+}
+
+.error {
+  text-align: center;
+  margin: 10px 20px 10px 20px
+}
+
+.button {
+  font-size: 20px;
+  width: 150px;
+  height: 40px;
+  margin-top: 30px;
+  margin-bottom: 25px;
+}
