@@ -1,36 +1,26 @@
-import { useSelector, useDispatch } from "react-redux";
-import {deleteContact} from '../../redux/reduxSlice'
+import { useSelector } from "react-redux";
+import {useGetContactsQuery} from '../../redux/reduxSlice'
+import Contact from '../Contact'
 import s from "./ContactsList.module.css";
 
 
-  const ContactList = () => {
-
-  const contacts = useSelector(state => state.contacts.contacts)
+const ContactList = () => {
   const filter = useSelector(state => state.filter.filter)
-
-  const dispatch = useDispatch()
+  const {data: contacts} = useGetContactsQuery()
 
   const filteredContacts = (contacts, filter) => {
-    return contacts.filter(contact => (
+    return contacts?.filter(contact => (
     contact.name.toLowerCase().includes(filter.toLowerCase())))
   }
 
   const filterContacts = filteredContacts(contacts, filter);
 
+
   return (
     <ul className={s.contactsList}>
-      {filterContacts.map(({ id, name, number }) => (
+      {filterContacts?.map(({ id, name, number }) => (
         <li key={id} className={s.contactsElement}>
-          <p className={s.contactsData}>
-            {name}: {number}
-          </p>
-          <button
-            className={s.btn}
-            type="button"
-            onClick={() => dispatch(deleteContact(id))}
-          >
-            Удалить
-          </button>
+          <Contact id={id} name={name} number={number}/>
         </li>
       ))}
     </ul>

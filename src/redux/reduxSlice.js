@@ -1,20 +1,35 @@
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { createSlice } from '@reduxjs/toolkit'
-import { v4 as uuidv4 } from 'uuid' 
 
-export const contactsSlice = createSlice({
-    name: 'contacts',
-    initialState: {contacts: []},
-    reducers: {
-        addContact: {
-            reducer: (state, {payload}) => {state.contacts.push(payload)},
-            prepare: ({name, number}) => {
-                const id = uuidv4()
-                return {payload: {id, name, number}}
-            }
-        },
-        deleteContact(state, {payload}) {state.contacts = state.contacts.filter(({id}) => id !== payload)}
-    }
-})
+export const contactsApi = createApi({
+    reducerPath: 'contacts',
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://6280c5027532b4920f7370f8.mockapi.io/contacts' }),
+    tagTypes: ['Contacts'],
+    endpoints: (builder) => ({
+      getContacts: builder.query({
+        query: () => '/contacts',
+        providesTags: ['Contacts']
+      }),
+
+      addContact: builder.mutation({
+          query: values => ({
+              url: '/contacts',
+              method: 'POST',
+              body: values
+          }),
+          invalidatesTags: ['Contacts'],
+      }),
+
+      deleteContact: builder.mutation({
+        query: id => ({
+            url: `/contacts/${id}`,
+            method: 'DELETE',
+        }),
+        invalidatesTags: ['Contacts'],
+
+    }),
+    }),
+  })
 
 export const filterSlice = createSlice({
     name: 'filter',
@@ -24,5 +39,5 @@ export const filterSlice = createSlice({
     }
 })
 
-export const {addContact, deleteContact} = contactsSlice.actions
+export const { useGetContactsQuery, useAddContactMutation, useDeleteContactMutation } = contactsApi
 export const {changeFilter} = filterSlice.actions

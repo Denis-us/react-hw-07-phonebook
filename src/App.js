@@ -1,3 +1,5 @@
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Form from "./components/Form";
 import Section from "./components/Section";
 import ContactList from "./components/ContactsList";
@@ -16,6 +18,7 @@ const App = () => {
           <Filter />
           <ContactList />
         </Section>
+        <ToastContainer/>
       </div>
     );
   }

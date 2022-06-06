@@ -1,18 +1,26 @@
+import { toast } from 'react-toastify';
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import {addContact} from '../../redux/reduxSlice'
+import {useAddContactMutation} from '../../redux/reduxSlice'
 import s from "./Form.module.css";
 
 
 const Form = () => {
 
   const { register, formState: { errors }, handleSubmit } = useForm();
-  const dispatch = useDispatch()
-
-  const onSubmit = data => dispatch(addContact(data))
+  const [addContact] = useAddContactMutation()
+  
+  const handleAddContact = async values => {
+    try {
+      await addContact(values)
+      toast.success('Контакт добавлен')
+    } catch (error) {
+      toast.error('Ошибка при добавлении контакта')
+      console.log(error)
+    }
+  }
 
     return (
-      <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
+      <form onSubmit={handleSubmit(handleAddContact)} className={s.form}>
         <div className={s.blockForm}>
         <label className={s.label}>Имя</label>
         <input className={s.input} {...register("name", {
