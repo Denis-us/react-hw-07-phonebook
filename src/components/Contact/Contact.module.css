@@ -1,3 +1,7 @@
+.contact {
+  display: flex;
+  align-items: center;
+}
 .btn {
     font-size: 15px;
     text-align: center;
@@ -6,7 +10,9 @@
     margin-left: 20px;
   }
   
+  .contactInfo {
+    min-width: 280px;
+  }
   .contactsData {
     font-size: 20px;
-    margin: 0;
   }

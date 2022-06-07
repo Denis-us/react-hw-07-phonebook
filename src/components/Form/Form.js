@@ -1,18 +1,24 @@
 import { toast } from 'react-toastify';
 import { useForm } from "react-hook-form";
-import {useAddContactMutation} from '../../redux/reduxSlice'
+import {useAddContactMutation, useGetContactsQuery} from '../../redux/reduxSlice'
 import s from "./Form.module.css";
 
 
 const Form = () => {
-
-  const { register, formState: { errors }, handleSubmit } = useForm();
+  const { register, formState: { errors }, handleSubmit, reset } = useForm();
   const [addContact] = useAddContactMutation()
+  const {data: contacts} = useGetContactsQuery()
   
+
   const handleAddContact = async values => {
     try {
-      await addContact(values)
-      toast.success('Контакт добавлен')
+      if(contacts.find(contact => (contact.name === values.name))) {
+        return toast.error('Такой контакт уже есть')
+      } else {
+        await addContact(values)
+        reset()
+        toast.success('Контакт добавлен')
+      }
     } catch (error) {
       toast.error('Ошибка при добавлении контакта')
       console.log(error)
@@ -30,7 +36,7 @@ const Form = () => {
           type = "text"
           placeholder = "Введите имя"/>
           </div>
-      {errors.name?.type === 'required' && <p>Имя может состоять только из букв, апострофа, тире и пробелов</p>}
+      {errors.name?.type === 'required' && <p className={s.error}>Имя может состоять только из букв, апострофа, тире и пробелов</p>}
         
 
         <div className={s.blockForm}>
